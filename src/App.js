@@ -4,15 +4,17 @@ import Home from "./Home";
 import User from "./user"
 
 import Checkout from './Checkout';
+import LoginPage from './LoginPage';
 
 const user = new User()
 
 function App() {
   return (
     <div className="App">
-      <Header test={user}/>
+      <Header test={user} />
       <Home />
-      
+      <LoginPage />
+
     </div>
   );
 }
