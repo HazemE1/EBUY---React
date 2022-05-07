@@ -1,17 +1,36 @@
-import React from "react"
+import React, {Component} from "react"
 import "./Header.css";
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import SearchIcon from '@mui/icons-material/Search';
 
 
-function Header() {
+class Header extends Component {
+    constructor(){
+        super()
+        this.state = {
+            counter: 1
+        }
+
+        setInterval(() =>  {
+            this.props.test.callIt(this.updateCounter())
+        }, 1000);
+    }
+
+    updateCounter(){
+        this.setState({
+            counter: this.state.counter+1
+        })
+    }
+
+
+    render(){
     return (
         <div className="header">
 
             <div className="header__logo">
                 <StorefrontIcon className="header__logoImage" fontSize="large" />
-                <h2 className="header__logoTitle">Mini project</h2>
+                <h2 className="header__logoTitle">{this.props.test.name} Mini project {this.state.counter}</h2>
             </div>
 
             <div className="header__search">
@@ -38,7 +57,7 @@ function Header() {
 
 
         </div>
-    )
+    )}
 
 }
 
