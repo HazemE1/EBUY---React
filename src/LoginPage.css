@@ -1,0 +1,27 @@
+.login label {
+    display: block;
+    color: #000000;
+    font-weight: bold;
+    margin-left: 40%;
+    margin-bottom: .3em;
+}
+
+.login input {
+    color: #000000;
+    -webkit-text-fill-color: #000000;
+    margin-bottom: 15px;
+    width: 20em;
+    height: 2.5em;
+    margin-left: 40%;
+}
+
+.login button {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-left: 40%;
+    width: 10%;
+}
+
+.login button:hover {
+    cursor: pointer;
+}
