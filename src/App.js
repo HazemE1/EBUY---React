@@ -1,12 +1,15 @@
 import React from "react"
-import {BrowserRouter, Route, Switch} from "react-router-dom"
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom"
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
+import "firebase/compat/auth";
 import './App.css';
 import Header from './Header';
 import Home from "./Home";
 import LoginPage from './LoginPage';
-import firebase from "firebase/compat/app";
-import "firebase/compat/database";
 import CreateAccountPage from "./CreateAccountPage";
+
+import Profile from "./Profile";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBYJHfzfe9nhfXyxdjvKtQuPnHph0YC9Gc",
@@ -49,7 +52,16 @@ function App() {
                     <HomePage/>
                 </Route>
             </Switch>
-
+            <Switch>
+                <Route exact path={"/profile"}>
+                    <Profile/>
+                </Route>
+            </Switch>
+            <Switch>
+                <Route exact path={"/"}>
+                    <Redirect to="/home"/>
+                </Route>
+            </Switch>
 
         </BrowserRouter>
     )

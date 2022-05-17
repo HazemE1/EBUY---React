@@ -39,6 +39,8 @@ class CreateAccountPage extends Component {
         await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(r => {
                 r.user.updateProfile({displayName: this.state.firstname + " " + this.state.lastname});
+                // eslint-disable-next-line no-restricted-globals
+                location.href = "/home"
             })
             .catch(e => {
                 this.setState({error: e})

@@ -4,7 +4,8 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import SearchIcon from '@mui/icons-material/Search';
 import {Link} from "react-router-dom"
-
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth"
 
 class Header extends Component {
     constructor(props) {
@@ -12,10 +13,13 @@ class Header extends Component {
         this.state = {
             counter: 1
         }
+
+
     }
 
 
     render() {
+
         return (
             <div className="header">
                 <div className="header__logo">
@@ -30,8 +34,21 @@ class Header extends Component {
 
                 <div className="header__nav">
                     <div className="nav__item">
-                        <span className="nav__itemLineOne">Hello Guest</span>
-                        <Link to={"login"} className="nav__itemLineTwo">Sign In</Link>
+                        {firebase.auth().currentUser === null ?
+                            <div>
+                                <span style={{display: "block"}} className="nav__itemLineOne">Hello Guest</span>
+                                <Link style={{display: "block"}} to={"login"} className="nav__itemLineTwo">Sign
+                                    In</Link>
+                            </div>
+                            :
+                            <div>
+                                <span style={{display: "block", textAlign: "center"}}
+                                      className="nav__itemLineOne">Hello</span>
+                                <span style={{display: "block", fontWeight: "bold"}}
+                                      className="nav__itemLineOne">{firebase.auth().currentUser.displayName}</span>
+                            </div>
+
+                        }
                     </div>
 
                     <div className="nav__item">
