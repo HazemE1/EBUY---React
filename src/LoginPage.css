@@ -1,27 +1,75 @@
-.login label {
-    display: block;
-    color: #000000;
-    font-weight: bold;
-    margin-left: 40%;
-    margin-bottom: .3em;
-}
+.background{
+    text-align: center;
+    justify-content: center;
+    display: flex; 
+    padding-top: 90px;
+    padding-bottom: 90px;
+    background-color: rgb(164, 167, 170);
+}  
 
-.login input {
-    color: #000000;
-    -webkit-text-fill-color: #000000;
-    margin-bottom: 15px;
-    width: 20em;
-    height: 2.5em;
-    margin-left: 40%;
+.main{
+    display: flex;
+    justify-content: center;
+    height: 550px;
+    width: 35%;
+    border-style: solid;
+    border-color: rgb(191, 185, 185);
+    padding-top: 30px;
+    border-radius: 60px; 
+    background-color: rgb(251, 251, 251);
 }
+.images{
+    padding-top: 20px;
+    justify-content: center;
+    display: flex;
 
-.login button {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-left: 40%;
-    width: 10%;
 }
+.imgContainer{
+    background-color: rgb(223, 221, 221); 
+    border-radius: 150px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 115px;
+    width: 115px;
+}
+.profile{
+    height: 100px;
+    width: 100px;
+    border-radius: 130px;
+}
+input{
+    width: 300px;
+    height: 50px;
+    border-radius: 60px;
 
-.login button:hover {
-    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: rgb(191, 185, 185);
+}
+.namePic{
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    padding: 14px 0 0 25px;
+    mix-blend-mode:color-burn
+}
+.details{
+    padding-left: 70px;
+    font-size: 20px;
+}
+.passwordInput{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+button{
+    width: 100px;
+    height: 50px;
+    border-radius: 60px;
+    background-color: #F77E7B;
+    color:black;
+    font-size: 25px;
+    border: none;
+    align-self: flex-end;
+    float: right;
 }

@@ -6,58 +6,48 @@ import SearchIcon from '@mui/icons-material/Search';
 
 
 class Header extends Component {
-    constructor(){
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             counter: 1
         }
-
-        setInterval(() =>  {
-            this.props.test.callIt(this.updateCounter())
-        }, 1000);
-    }
-
-    updateCounter(){
-        this.setState({
-            counter: this.state.counter+1
-        })
     }
 
 
-    render(){
-    return (
-        <div className="header">
+    render() {
+        return (
+            <div className="header">
 
-            <div className="header__logo">
-                <StorefrontIcon className="header__logoImage" fontSize="large" />
-                <h2 className="header__logoTitle">{this.props.test.name} Mini project {this.state.counter}</h2>
-            </div>
-
-            <div className="header__search">
-                <input type="text" className="header__searchInput" />
-                <SearchIcon className="header__searchIcon" />
-            </div>
-
-            <div className="header__nav">
-                <div className="nav__item">
-                    <span className="nav__itemLineOne">Hello Guest</span>
-                    <span className="nav__itemLineTwo">Sign In</span>
+                <div className="header__logo">
+                    <StorefrontIcon className="header__logoImage" fontSize="large"/>
+                    <h2 className="header__logoTitle">Mini project</h2>
                 </div>
 
-                <div className="nav__item">
-                    <span className="nav__itemLineOne">Your</span>
-                    <span className="nav__itemLineTwo">Shop</span>
+                <div className="header__search">
+                    <input type="text" className="header__searchInput"/>
+                    <SearchIcon className="header__searchIcon"/>
                 </div>
-                <div className="nav__itemBasket">
-                    <ShoppingBasketIcon />
-                    <span className="nav__itemLineTwo nav__basketCount">0</span>
+
+                <div className="header__nav">
+                    <div className="nav__item">
+                        <span className="nav__itemLineOne">Hello Guest</span>
+                        <span  className="nav__itemLineTwo">Sign In</span>
+                    </div>
+
+                    <div className="nav__item">
+                        <span className="nav__itemLineOne">Your</span>
+                        <span className="nav__itemLineTwo">Shop</span>
+                    </div>
+                    <div className="nav__itemBasket">
+                        <ShoppingBasketIcon/>
+                        <span className="nav__itemLineTwo nav__basketCount">0</span>
+                    </div>
                 </div>
+
+
             </div>
-
-
-
-        </div>
-    )}
+        )
+    }
 
 }
 
