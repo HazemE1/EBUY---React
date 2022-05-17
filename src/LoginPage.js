@@ -1,19 +1,29 @@
 import {Component} from "react"
+import "firebase/compat/auth";
+
 import "./LoginPage.css"
 
-class LoginPage extends Component{
+
+class LoginPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             user: "",
-            password: ""
+            password: "",
+        }
+    }
+
+    loginUser() {
+        if (this.state.user.length < 3 || this.state.password < 8 || !this.state.user.includes("@")) {
+            this.setState({err: "Invalid username/password"});
+            return
         }
     }
 
     render() {
         return (
             <div className='background' style={{
-                    backgroundImage: `url("https://www.thestatesman.com/wp-content/uploads/2020/11/iStock-ecomm.jpg")`
+                backgroundImage: `url("https://www.thestatesman.com/wp-content/uploads/2020/11/iStock-ecomm.jpg")`
             }}>
                 <div className='main'>
                     <div>
@@ -25,6 +35,8 @@ class LoginPage extends Component{
                             </div>
                         </div>
                         <div>
+                            <h1 style={{color: "red", fontSize: 15, display: "inline-block"}}>{this.state.err}</h1>
+
                             <h1>Log in to your account</h1>
                             <div>
                                 <img
@@ -37,10 +49,11 @@ class LoginPage extends Component{
                                      alt="passPic" className='namePic'/>
                                 <input type="text" placeholder="Password" className="details"/>
                             </div>
-                            <button className="loginB" onClick={console.log('trynna log in?')}>Login</button>
+                            <button className="loginB" onClick={() => this.loginUser()}>Login
+                            </button>
 
                             {/* eslint-disable-next-line no-restricted-globals */}
-                            <button className="registerB" onClick={ () => location.href = "/register"}>Register</button>
+                            <button className="registerB" onClick={() => location.href = "/register"}>Register</button>
 
                         </div>
                     </div>

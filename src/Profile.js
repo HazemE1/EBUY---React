@@ -10,7 +10,7 @@ class CreateAccountPage extends Component {
         super(props);
 
         this.state = {
-            user: new User(), showAdd: true, showRemove: false, showPending: false, showProducts: false,
+            user: new User(), showAdd: false, showRemove: false, showPending: true, showProducts: false,
 
         }
     }
@@ -32,6 +32,9 @@ class CreateAccountPage extends Component {
                     </div>
                     <div style={styles.panel}>
                         <div onClick={() => alert("add")} style={styles.button}>
+                            <h1 style={styles.text}>PRODUCTS</h1>
+                        </div>
+                        <div onClick={() => alert("add")} style={styles.button}>
                             <h1 style={styles.text}>ADD</h1>
                         </div>
                         <div onClick={() => alert("remove")} style={styles.button}>
@@ -47,8 +50,8 @@ class CreateAccountPage extends Component {
             </div>
             {this.state.showAdd && <ShowAdd user={this.state.User}/>}
             {this.state.showRemove && <ShowRemove user={this.state.User}/>}
-            {this.state.showPending && <ShowPending user={this.state.User}/>}
-            {this.state.showProducts && <showProducts user={this.state.User}/>}
+            {this.state.showPending && ShowPending(this.state.User)}
+            {this.state.showProducts && <ShowProducts user={this.state.User}/>}
         </div>)
 
     }
@@ -70,17 +73,22 @@ function ShowRemove() {
     )
 }
 
-function ShowPending() {
+function ShowPending(user) {
     return (
-        <div>
-            <h1>show pending</h1>
+        <div style={styles.components}>
+            {user &&
+                user.buyProducts.map((i, v) => {
+                    return <h1>{i} - {v}</h1>
+                })
+            }
         </div>)
 }
 
 function ShowProducts() {
     return (
-        <div>
-            <h1>show product</h1>
+        <div style={styles.components}>
+
+
         </div>)
 }
 

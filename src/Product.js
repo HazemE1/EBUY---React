@@ -6,11 +6,13 @@ class Product extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
-            price: 0,
-            image: "",
-            condition: "",
-            description: ""
+            name: this.props.name,
+            price: this.props.price,
+            image: this.props.image,
+            condition: this.props.condition,
+            description: this.props.description,
+            categories: this.props.categories,
+            owner: this.props.owner,
         }
     }
 
