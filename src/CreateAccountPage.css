@@ -1,25 +1,60 @@
+.background{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    padding-top: 90px;
+    padding-bottom: 90px;
+    background-color: rgb(164, 167, 170);
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    height: 550px;
+    width: 35%;
+    border-style: solid;
+    border-color: rgb(191, 185, 185);
+    border-radius: 60px;
+    background-color: rgb(251, 251, 251);
+}
+
+.create {
+    justify-content: center;
+    display: block;
+}
 
 .create label {
-    display: block;
+    display: flex;
     color: #000000;
     font-weight: bold;
-    margin-bottom: .3em;
-    margin-left: 40%;
+    border: none;
+    outline: none;
+    padding-left: 8em;
+    padding-bottom: .5em;
 }
 
 .create input {
     color: #000000;
     -webkit-text-fill-color: #000000;
     margin-bottom: 15px;
-    width: 20em;
-    height: 2.5em;
-    margin-left: 40%;
+    height: 3em;
+    width: 300px;
+    border-radius: 60px;
+    border: none;
+    outline: none;
+    background-color: rgb(228, 220, 220);
+    padding-left: 5%;
 }
 
 .create button {
+    width: 10em;
+    height: 2em;
+    border-radius: 60px;
+    background-color: cornflowerblue;
+    color:black;
     font-size: 1.5em;
-    font-weight: bold;
-    margin-left: 40%;
+    border: none;
+    margin-right: 6em;
 }
 
 .create button:hover {
