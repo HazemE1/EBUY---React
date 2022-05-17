@@ -4,11 +4,16 @@ import "./LoginPage.css"
 class LoginPage extends Component{
     constructor(props) {
         super(props);
+        this.state = {
+            user: "",
+            password: ""
+        }
     }
+
     render() {
         return (
             <div className='background' style={{
-                backgroundImage: `url("https://www.thestatesman.com/wp-content/uploads/2020/11/iStock-ecomm.jpg")`
+                    backgroundImage: `url("https://www.thestatesman.com/wp-content/uploads/2020/11/iStock-ecomm.jpg")`
             }}>
                 <div className='main'>
                     <div>
@@ -32,7 +37,11 @@ class LoginPage extends Component{
                                      alt="passPic" className='namePic'/>
                                 <input type="text" placeholder="Password" className="details"/>
                             </div>
-                            <button onClick={console.log('trynna log in?')}>Login</button>
+                            <button className="loginB" onClick={console.log('trynna log in?')}>Login</button>
+
+                            {/* eslint-disable-next-line no-restricted-globals */}
+                            <button className="registerB" onClick={ () => location.href = "/register"}>Register</button>
+
                         </div>
                     </div>
                 </div>

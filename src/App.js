@@ -3,11 +3,9 @@ import {BrowserRouter, Route, Switch} from "react-router-dom"
 import './App.css';
 import Header from './Header';
 import Home from "./Home";
-import User from "./user"
 import LoginPage from './LoginPage';
 import firebase from "firebase/compat/app";
 import "firebase/compat/database";
-import createAccountPage from "./CreateAccountPage";
 import CreateAccountPage from "./CreateAccountPage";
 
 const firebaseConfig = {
@@ -21,8 +19,6 @@ const firebaseConfig = {
     measurementId: "G-HFCTDBJCSV"
 };
 firebase.initializeApp(firebaseConfig)
-firebase.database().ref("tset").set("test").then(r => console.log(r))
-const user = new User()
 
 function HomePage() {
 
@@ -36,7 +32,7 @@ function HomePage() {
 
 function App() {
     return (
-        <BrowserRouter>
+        <BrowserRouter className={"bg"} id={"bg"}>
 
             <Switch>
                 <Route exact path={"/login"}>
@@ -49,7 +45,7 @@ function App() {
                 </Route>
             </Switch>
             <Switch>
-                <Route exact path={"/"}>
+                <Route exact path={"/home"}>
                     <HomePage/>
                 </Route>
             </Switch>

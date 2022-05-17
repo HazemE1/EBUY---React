@@ -3,6 +3,7 @@ import "./Header.css";
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import SearchIcon from '@mui/icons-material/Search';
+import {Link} from "react-router-dom"
 
 
 class Header extends Component {
@@ -17,7 +18,6 @@ class Header extends Component {
     render() {
         return (
             <div className="header">
-
                 <div className="header__logo">
                     <StorefrontIcon className="header__logoImage" fontSize="large"/>
                     <h2 className="header__logoTitle">Mini project</h2>
@@ -31,7 +31,7 @@ class Header extends Component {
                 <div className="header__nav">
                     <div className="nav__item">
                         <span className="nav__itemLineOne">Hello Guest</span>
-                        <span  className="nav__itemLineTwo">Sign In</span>
+                        <Link to={"login"} className="nav__itemLineTwo">Sign In</Link>
                     </div>
 
                     <div className="nav__item">
