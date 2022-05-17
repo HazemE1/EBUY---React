@@ -16,31 +16,6 @@ class CreateAccountPage extends Component {
     }
 
 
-    ShowAdd() {
-        return (
-            <div style={styles.components}>
-
-            </div>)
-    }
-
-    ShowRemove() {
-        return (<div>
-            <h1>remove product</h1>
-        </div>)
-    }
-
-    ShowPending() {
-        return (<div>
-            <h1>show pending</h1>
-        </div>)
-    }
-
-    ShowProducts() {
-        return (<div>
-            <h1>show product</h1>
-        </div>)
-    }
-
     render() {
         return (<div style={{
             backgroundImage: `url("https://www.thestatesman.com/wp-content/uploads/2020/11/iStock-ecomm.jpg")`,
@@ -56,9 +31,6 @@ class CreateAccountPage extends Component {
                         <h1 style={{display: "block", textAlign: "center"}}>Product management</h1>
                     </div>
                     <div style={styles.panel}>
-                        <div onClick={() => alert("show")} style={styles.button}>
-                            <h1 style={styles.text}>PRODUCTS</h1>
-                        </div>
                         <div onClick={() => alert("add")} style={styles.button}>
                             <h1 style={styles.text}>ADD</h1>
                         </div>
@@ -73,16 +45,44 @@ class CreateAccountPage extends Component {
                 </div>
 
             </div>
-            {this.state.showAdd && this.showAdd()}
-            {this.state.showRemove && this.showRemove()}
-            {this.state.showPending && this.showPending()}
-            {this.state.showProducts && this.showProducts()}
+            {this.state.showAdd && <ShowAdd user={this.state.User}/>}
+            {this.state.showRemove && <ShowRemove user={this.state.User}/>}
+            {this.state.showPending && <ShowPending user={this.state.User}/>}
+            {this.state.showProducts && <showProducts user={this.state.User}/>}
         </div>)
 
     }
 
 }
 
+function ShowAdd() {
+    return (
+        <div style={styles.add}>
+        </div>
+    )
+}
+
+function ShowRemove() {
+    return (
+        <div>
+            <h1>remove product</h1>
+        </div>
+    )
+}
+
+function ShowPending() {
+    return (
+        <div>
+            <h1>show pending</h1>
+        </div>)
+}
+
+function ShowProducts() {
+    return (
+        <div>
+            <h1>show product</h1>
+        </div>)
+}
 
 let styles = {
     container: {
