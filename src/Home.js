@@ -1,67 +1,81 @@
 import React from "react";
 import "./Home.css";
-import Product from "./Product";
+import firebase from "firebase/compat/app"
+import "firebase/compat/database"
+import Product from "./Product"
 
-function Home() {
-    return (
-        <div className="home">
-            <div className="home__container">
+class Home extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            allProducts: [],
+        }
+    }
 
-                <img src="https://www.x-cart.com/wp-content/uploads/2019/01/ecommerce-768x278.jpg" alt="" className="home__image" />
+    componentDidMount() {
+        this.fetchAllProducts()
 
-                <div className="home__row">
-                    <Product
-                        id="12321341"
-                        title="Bennett Mystic 15.6 inch Laptop Shoulder Messenger Sling Office Bag, Water Repellent Fabric for Men and Women (Blue)"
-                        price={11.96}
-                        rating={5}
-                        image="https://images-na.ssl-images-amazon.com/images/I/71mEsHyzSCL._SL1000_.jpg"
-                    />
-                    <Product
-                        id="49538094"
-                        title="IFB 30 L Convection Microwave Oven (30BRC2, Black, With Starter Kit)"
-                        price={239.0}
-                        rating={4}
-                        image="https://images-na.ssl-images-amazon.com/images/I/81D8pNFmWzL._SL1500_.jpg"
-                    />
+    }
+
+    fetchAllProducts() {
+        firebase.database().ref("products").once("value", (v) => {
+            const arr = []
+            v.forEach(p => {
+                arr.push(<Product key={p.val().uuid}
+                                  name={p.val().name}
+                                  price={p.val().price}
+                                  image={p.val().image}
+                                  condition={p.val().condition}
+                                  description={p.val().description}
+                                  category={p.val().category}
+                                  yearofmake={p.val().yearofmake}
+                                  colour={p.val().colour}
+                                  owner={p.val().user}
+                                  uuid={p.val().uuid}/>)
+
+            })
+            this.setState({allProducts: arr})
+        }).then(r => console.log("done"));
+
+
+    }
+
+    render() {
+        return (
+            <div style={styles.wrapper}>
+                <div style={styles.product_view}>
+                    <div style={styles.product}>
+                    {this.state.allProducts.length > 0 ? this.state.allProducts.map(p => {
+                        return p
+                    }) : <h1 style={{textAlign: "center"}}>There are no items in the shop</h1>}
+                    </div>
                 </div>
+            </div>
+        )
+    }
+}
 
-                <div className="home__row">
-                    <Product
-                        id="4903850"
-                        title="All the Light we Cannot See: The Breathtaking World Wide Bestseller Paperback"
-                        price={199.99}
-                        rating={3}
-                        image="https://images-eu.ssl-images-amazon.com/images/I/514kNkerQ0L._SY264_BO1,204,203,200_QL40_FMwebp_.jpg"
-                    />
-                    <Product
-                        id="23445930"
-                        title="Amazon Echo (3rd generation) | Smart speaker with Alexa, Charcoal Fabric"
-                        price={98.99}
-                        rating={5}
-                        image="https://media.very.co.uk/i/very/P6LTG_SQ1_0000000071_CHARCOAL_SLf?$300x400_retinamobilex2$"
-                    />
-                    <Product
-                        id="3254354345"
-                        title="New Apple iPad Pro (12.9-inch, Wi-Fi, 128GB) - Silver (4th Generation)"
-                        price={598.99}
-                        rating={4}
-                        image="https://images-na.ssl-images-amazon.com/images/I/816ctt5WV5L._AC_SX385_.jpg"
-                    />
-                </div>
+let styles = {
+    wrapper: {
+        display: "flex",
+        background: `url("https://www.thestatesman.com/wp-content/uploads/2020/11/iStock-ecomm.jpg")`,
+        backgroundSize: "contain",
+        overflow: "hidden",
+        backgroundColor: "rgba(0,0,0,0.8)",
+    },
+    product_view: {
+        minHeight: "150vh",
+        backgroundColor: "rgba(0,0,0,0.8)",
+        display: "flex",
+        flex: 1,
+        flexWrap: "wrap",
 
-                <div className="home__row">
-                    <Product
-                        id="90829332"
-                        title="Samsung LC49RG90SSUXEN 49' Curved LED Gaming Monitor - Super Ultra Wide Dual WQHD 5120 x 1440"
-                        price={1094.98}
-                        rating={4}
-                        image="https://images-na.ssl-images-amazon.com/images/I/6125mFrzr6L._AC_SX355_.jpg"
-                    />
-                </div>
-            </div>   
-        </div> 
-    )
+    },
+    product: {
+        flex:1,
+        width: "20%",
+
+    }
 }
 
 export default Home

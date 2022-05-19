@@ -3,7 +3,6 @@ import "./Header.css";
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import SearchIcon from '@mui/icons-material/Search';
-import {Link} from "react-router-dom"
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth"
 
@@ -22,7 +21,8 @@ class Header extends Component {
 
         return (
             <div className="header">
-                <div className="header__logo">
+                {/* eslint-disable-next-line no-restricted-globals */}
+                <div onClick={() => location.href = "/home"} className="header__logo">
                     <StorefrontIcon className="header__logoImage" fontSize="large"/>
                     <h2 className="header__logoTitle">Mini project</h2>
                 </div>
@@ -37,8 +37,8 @@ class Header extends Component {
                         {firebase.auth().currentUser === null ?
                             <div>
                                 <span style={{display: "block"}} className="nav__itemLineOne">Hello Guest</span>
-                                <Link style={{display: "block"}} to={"login"} className="nav__itemLineTwo">Sign
-                                    In</Link>
+                                <a style={{display: "block"}} href={"/login"} className="nav__itemLineTwo">Sign
+                                    In</a>
                             </div>
                             :
                             <div>
@@ -53,10 +53,19 @@ class Header extends Component {
 
                     <div className="nav__item">
                         <span className="nav__itemLineOne">Your</span>
-                        <span className="nav__itemLineTwo">Shop</span>
+                        <a href="/profile" className="nav__itemLineTwo">Shop</a>
                     </div>
                     <div className="nav__itemBasket">
-                        <ShoppingBasketIcon/>
+                        <icon onClick={() => {
+                            const cartModalOverlay = document.querySelector('.cart-modal-overlay');
+                            if (cartModalOverlay.style.transform === 'translateX(-200%)') {
+                                cartModalOverlay.style.transform = 'translateX(0)';
+                            } else {
+                                cartModalOverlay.style.transform = 'translateX(-200%)';
+                            }
+                        }}>
+                            <ShoppingBasketIcon/>
+                        </icon>
                         <span className="nav__itemLineTwo nav__basketCount">0</span>
                     </div>
                 </div>

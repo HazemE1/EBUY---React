@@ -10,6 +10,8 @@ import LoginPage from './LoginPage';
 import CreateAccountPage from "./CreateAccountPage";
 
 import Profile from "./Profile";
+import User from "./User";
+import ShoppingCart from "./ShoppingCart";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBYJHfzfe9nhfXyxdjvKtQuPnHph0YC9Gc",
@@ -23,6 +25,8 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig)
 
+
+
 function HomePage() {
 
     return (
@@ -33,38 +37,61 @@ function HomePage() {
     );
 }
 
-function App() {
-    return (
-        <BrowserRouter className={"bg"} id={"bg"}>
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: new User(),
 
-            <Switch>
-                <Route exact path={"/login"}>
-                    <LoginPage/>
-                </Route>
-            </Switch>
-            <Switch>
-                <Route exact path={"/register"}>
-                    <CreateAccountPage/>
-                </Route>
-            </Switch>
-            <Switch>
-                <Route exact path={"/home"}>
-                    <HomePage/>
-                </Route>
-            </Switch>
-            <Switch>
-                <Route exact path={"/profile"}>
-                    <Profile/>
-                </Route>
-            </Switch>
-            <Switch>
-                <Route exact path={"/"}>
-                    <Redirect to="/home"/>
-                </Route>
-            </Switch>
+        }
+        firebase.auth().onAuthStateChanged((user) => {
+            if(user){
+                this.setState({user: new User()})
 
-        </BrowserRouter>
-    )
+            }else{
+                console.log(user)
+            }
+
+        })
+
+
+    }
+
+    render() {
+        return (
+            <BrowserRouter className={"bg"} id={"bg"}>
+                <ShoppingCart/>
+
+                <Switch>
+                    <Route exact path={"/login"}>
+                        <LoginPage user={this.state.user}/>
+
+                    </Route>
+                </Switch>
+                <Switch>
+                    <Route exact path={"/register"}>
+                        <CreateAccountPage user={this.state.user}/>
+                    </Route>
+                </Switch>
+                <Switch>
+                    <Route exact path={"/home"}>
+                        <HomePage user={this.state.user}/>
+                    </Route>
+                </Switch>
+                <Switch>
+                    <Route exact path={"/profile"}>
+                        <Profile user={this.state.user}/>
+                    </Route>
+                </Switch>
+                <Switch>
+                    <Route exact path={"/"}>
+                        <Redirect to="/home"/>
+                    </Route>
+                </Switch>
+
+            </BrowserRouter>
+        )
+    }
 }
 
 export default App;

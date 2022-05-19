@@ -2,21 +2,42 @@ import "./CreateAccountPage.css";
 import "firebase/compat/auth";
 
 import {Component} from "react";
-import User from "./User"
 import Header from "./Header"
+import AddItemPage from "./AddItemPage";
 
 class CreateAccountPage extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: new User(), showAdd: false, showRemove: false, showPending: true, showProducts: false,
+            user: this.props.user, showAdd: false, showRemove: false, showPending: true, showProducts: false,
 
         }
     }
 
 
+    switch(page) {
+        if (page === "products") {
+            this.setState({
+                showAdd: false, showRemove: false, showPending: false, showProducts: true
+            })
+        } else if (page === "add") {
+            this.setState({
+                showAdd: true, showRemove: false, showPending: false, showProducts: false
+            })
+        } else if (page === "remove") {
+            this.setState({
+                showAdd: false, showRemove: true, showPending: false, showProducts: false
+            })
+        } else if (page === "pending") {
+            this.setState({
+                showAdd: false, showRemove: false, showPending: true, showProducts: false
+            })
+        }
+    }
+
     render() {
+
         return (<div style={{
             backgroundImage: `url("https://www.thestatesman.com/wp-content/uploads/2020/11/iStock-ecomm.jpg")`,
             height: "100vh",
@@ -31,24 +52,24 @@ class CreateAccountPage extends Component {
                         <h1 style={{display: "block", textAlign: "center"}}>Product management</h1>
                     </div>
                     <div style={styles.panel}>
-                        <div onClick={() => alert("add")} style={styles.button}>
+                        <div onClick={() => this.switch("products")} style={styles.button}>
                             <h1 style={styles.text}>PRODUCTS</h1>
                         </div>
-                        <div onClick={() => alert("add")} style={styles.button}>
+                        <div onClick={() => this.switch("add")} style={styles.button}>
                             <h1 style={styles.text}>ADD</h1>
                         </div>
-                        <div onClick={() => alert("remove")} style={styles.button}>
+                        <div onClick={() => this.switch("remove")} style={styles.button}>
                             <h1 style={styles.text}>REMOVE</h1>
 
                         </div>
-                        <div onClick={() => alert("pending")} style={styles.button}>
+                        <div onClick={() => this.switch("pending")} style={styles.button}>
                             <h1 style={styles.text}>PENDING</h1>
                         </div>
                     </div>
                 </div>
 
             </div>
-            {this.state.showAdd && <ShowAdd user={this.state.User}/>}
+            {this.state.showAdd && <AddItemPage user={this.state.User}/>}
             {this.state.showRemove && <ShowRemove user={this.state.User}/>}
             {this.state.showPending && ShowPending(this.state.User)}
             {this.state.showProducts && <ShowProducts user={this.state.User}/>}

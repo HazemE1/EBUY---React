@@ -7,14 +7,10 @@ export default class User {
         this.buyProducts = {};
         this.cart = [];
 
-        firebase.auth().onAuthStateChanged((user) => {
-            if(user){
-                console.log(user)
-            }else{
-                console.log(user)
-            }
 
-        })
+        this.fetchBuyProducts();
+        this.fetchSellingProducts();
+        this.getMessages();
     }
 
 
@@ -39,8 +35,12 @@ export default class User {
     }
 
 
+    addProductToSelling(product){
+        
+    }
+
     getUserName(){
-        return firebase.auth().currentUser !== null ? firebase.auth().currentUser.displayName : "NO NAME"
+        return firebase.auth().currentUser !== null ? firebase.auth().currentUser.displayName : "ERRRR"
     }
 
 }
