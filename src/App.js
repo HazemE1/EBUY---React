@@ -12,6 +12,8 @@ import CreateAccountPage from "./CreateAccountPage";
 import Profile from "./Profile";
 import User from "./User";
 import ShoppingCart from "./ShoppingCart";
+import Product from "./Product";
+import Message from "./Message";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBYJHfzfe9nhfXyxdjvKtQuPnHph0YC9Gc",
@@ -26,66 +28,101 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 
-
-function HomePage() {
-
+function HomePage(props) {
+    console.log(props)
     return (
         <div className="app">
-            <Header/>
-            <Home/>
         </div>
     );
 }
+
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: new User(),
-
+            user: null,
+            allProducts: null,
         }
+
+        global.sendMessage = (title, message, user) => {
+            firebase.database().ref("users").child(user).child("messages").push({
+                title: title, message: message
+            })
+        }
+    }
+
+    componentDidMount() {
         firebase.auth().onAuthStateChanged((user) => {
-            if(user){
+            if (user) {
                 this.setState({user: new User()})
 
-            }else{
-                console.log(user)
+            } else {
+                console.log("No user")
             }
-
         })
 
+        firebase.database().ref("products").on("child_removed", (v) => {
+            const arr = this.state.allProducts
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].uuid === v.key)
+                    arr.splice(i)
+            }
+            this.setState({allProducts: arr})
+        })
 
+        firebase.database().ref("products").on("value", (v) => {
+            const arr = []
+            v.forEach(p => {
+                arr.push(<Product props={false} uuid={p.key} key={p.key}/>)
+            })
+            this.setState({allProducts: arr})
+        })
     }
 
     render() {
         return (
             <BrowserRouter className={"bg"} id={"bg"}>
+                <Header/>
+
                 <ShoppingCart/>
+                {this.state.user != null &&
+                    <Message/>}
 
                 <Switch>
                     <Route exact path={"/login"}>
-                        <LoginPage user={this.state.user}/>
-
+                        <LoginPage products={this.state.allProducts}/>
                     </Route>
                 </Switch>
                 <Switch>
                     <Route exact path={"/register"}>
-                        <CreateAccountPage user={this.state.user}/>
+                        <CreateAccountPage products={this.state.allProducts}/>
                     </Route>
                 </Switch>
                 <Switch>
                     <Route exact path={"/home"}>
-                        <HomePage user={this.state.user}/>
+                        {this.state.user ?
+                            <Home user={this.state.user} products={this.state.allProducts}/>
+                            : <div/>}
                     </Route>
                 </Switch>
                 <Switch>
                     <Route exact path={"/profile"}>
-                        <Profile user={this.state.user}/>
+                        {this.state.user ?
+                            <Profile products={this.state.allProducts} user={this.state.user}/>
+                            : <div>
+                                <h1>You need to login first! </h1>
+                            </div>}
                     </Route>
                 </Switch>
                 <Switch>
                     <Route exact path={"/"}>
-                        <Redirect to="/home"/>
+                        {this.state.user === null ?
+                            <Redirect products={this.state.allProducts} to="/home"/>
+                            :
+                            <Redirect products={this.state.allProducts} to="/login"/>
+
+                        }
                     </Route>
                 </Switch>
 

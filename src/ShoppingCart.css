@@ -17,9 +17,8 @@ p {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, .5);
-    z-index: 100    ;
-    transform: translateX(-200%); /* this controlls that it hides from the start */
+    z-index: 100;
+    transform: translateX(200%); /* this controlls that it hides from the start */
     transition: .5s ease-out;
 }
 
@@ -35,11 +34,12 @@ p {
 }
 
 #close-btn {
+    position: fixed;
+    top: 1%;
+    right: 5%;
     font-size: 2.0rem;
     float: right;
-    margin: 80px 2em 0 0;
     color: white;
-
     cursor: pointer;
 }
 
@@ -48,7 +48,6 @@ p {
     text-align: center;
     font-size: 1.5rem;
     margin-bottom: 1em;
-    display: none;
 
 }
 

@@ -10,8 +10,12 @@ class CreateAccountPage extends Component {
         super(props);
 
         this.state = {
-            user: this.props.user, showAdd: false, showRemove: false, showPending: true, showProducts: false,
-
+            user: this.props.user,
+            showAdd: false,
+            showRemove: false,
+            showPending: false,
+            showProducts: true,
+            update: false
         }
     }
 
@@ -36,14 +40,19 @@ class CreateAccountPage extends Component {
         }
     }
 
-    render() {
+    componentDidMount() {
+        this.setState({
+            update: true
+        })
+    }
 
+
+    render() {
         return (<div style={{
             backgroundImage: `url("https://www.thestatesman.com/wp-content/uploads/2020/11/iStock-ecomm.jpg")`,
             height: "100vh",
             width: "100vw"
         }}>
-            <Header/>
 
             <div style={styles.container}>
                 <div style={styles.profileContainer}>
@@ -58,10 +67,6 @@ class CreateAccountPage extends Component {
                         <div onClick={() => this.switch("add")} style={styles.button}>
                             <h1 style={styles.text}>ADD</h1>
                         </div>
-                        <div onClick={() => this.switch("remove")} style={styles.button}>
-                            <h1 style={styles.text}>REMOVE</h1>
-
-                        </div>
                         <div onClick={() => this.switch("pending")} style={styles.button}>
                             <h1 style={styles.text}>PENDING</h1>
                         </div>
@@ -69,21 +74,23 @@ class CreateAccountPage extends Component {
                 </div>
 
             </div>
-            {this.state.showAdd && <AddItemPage user={this.state.User}/>}
-            {this.state.showRemove && <ShowRemove user={this.state.User}/>}
-            {this.state.showPending && ShowPending(this.state.User)}
-            {this.state.showProducts && <ShowProducts user={this.state.User}/>}
+            {this.state.showAdd && <AddItemPage user={this.state.user}/>}
+            {this.state.showPending && <ShowPending/>}
+            {this.state.showProducts && <ShowProducts user={this.state.user}/>}
         </div>)
 
     }
 
 }
 
-function ShowAdd() {
+
+function ShowProducts() {
     return (
-        <div style={styles.add}>
-        </div>
-    )
+        <div style={styles.components}>
+            {global.user.sellingProducts.map((v) => {
+                return v
+            })}
+        </div>)
 }
 
 function ShowRemove() {
@@ -94,24 +101,16 @@ function ShowRemove() {
     )
 }
 
-function ShowPending(user) {
+function ShowPending() {
     return (
         <div style={styles.components}>
-            {user &&
-                user.buyProducts.map((i, v) => {
-                    return <h1>{i} - {v}</h1>
-                })
+            {global.user.pendingProducts.map((i) => {
+                return i
+            })
             }
         </div>)
 }
 
-function ShowProducts() {
-    return (
-        <div style={styles.components}>
-
-
-        </div>)
-}
 
 let styles = {
     container: {
@@ -136,7 +135,6 @@ let styles = {
         height: "100%",
         width: "100%",
         background: "rgba(0,0,0,0.8)",
-        overflowY: "scroll"
     }
 
 }

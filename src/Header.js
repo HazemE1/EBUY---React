@@ -1,8 +1,11 @@
 import React, {Component} from "react"
 import "./Header.css";
+
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import Mesasge from '@mui/icons-material/Message';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import SearchIcon from '@mui/icons-material/Search';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth"
 
@@ -18,9 +21,10 @@ class Header extends Component {
 
 
     render() {
-
         return (
             <div className="header">
+
+
                 {/* eslint-disable-next-line no-restricted-globals */}
                 <div onClick={() => location.href = "/home"} className="header__logo">
                     <StorefrontIcon className="header__logoImage" fontSize="large"/>
@@ -41,32 +45,29 @@ class Header extends Component {
                                     In</a>
                             </div>
                             :
-                            <div>
-                                <span style={{display: "block", textAlign: "center"}}
-                                      className="nav__itemLineOne">Hello</span>
-                                <span style={{display: "block", fontWeight: "bold"}}
-                                      className="nav__itemLineOne">{firebase.auth().currentUser.displayName}</span>
+                            // eslint-disable-next-line no-restricted-globals
+                            <div onClick={() => location.href = "/profile"}>
+
+                                <AccountBoxIcon/>
                             </div>
 
                         }
                     </div>
 
-                    <div className="nav__item">
-                        <span className="nav__itemLineOne">Your</span>
-                        <a href="/profile" className="nav__itemLineTwo">Shop</a>
+                    <div onClick={() => global.showMessages()} className="nav__item">
+                        <Mesasge/>
                     </div>
-                    <div className="nav__itemBasket">
-                        <icon onClick={() => {
-                            const cartModalOverlay = document.querySelector('.cart-modal-overlay');
-                            if (cartModalOverlay.style.transform === 'translateX(-200%)') {
-                                cartModalOverlay.style.transform = 'translateX(0)';
-                            } else {
-                                cartModalOverlay.style.transform = 'translateX(-200%)';
-                            }
-                        }}>
+                    <div onClick={() => {
+                        const cartModalOverlay = document.querySelector('.cart-modal-overlay');
+                        if (cartModalOverlay.style.transform === 'translateX(200%)') {
+                            cartModalOverlay.style.transform = 'translateX(0)';
+                        } else {
+                            cartModalOverlay.style.transform = 'translateX(200%)';
+                        }
+                    }} className="nav__itemBasket">
+                        <icon>
                             <ShoppingBasketIcon/>
                         </icon>
-                        <span className="nav__itemLineTwo nav__basketCount">0</span>
                     </div>
                 </div>
 

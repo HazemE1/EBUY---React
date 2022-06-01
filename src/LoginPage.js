@@ -2,6 +2,7 @@ import {Component} from "react"
 import "firebase/compat/auth";
 import firebase from "firebase/compat/app"
 import "./LoginPage.css"
+import User from "./User";
 
 
 class LoginPage extends Component {
@@ -11,10 +12,20 @@ class LoginPage extends Component {
             user: "",
             password: "",
         }
+
+    }
+
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({user: new User()})
+            } else {
+                console.log("No user")
+            }
+        })
     }
 
     async loginUser() {
-        console.log(JSON.stringify(this.state))
         if (this.state.user.length < 3 || this.state.password < 8 || !this.state.user.includes("@")) {
             this.setState({err: "Invalid username/password"});
             return

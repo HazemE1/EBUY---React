@@ -10,27 +10,27 @@ import {Component} from "react"
 class AddItemPage extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            name:               "",
-            price:              "",
-            image:              "",
-            condition:          "New",
-            description:         "",
-            category:           "",
-            yearofmake:         "",
-            colour:             "",
+            name: "",
+            price: "",
+            image: "",
+            condition: "New",
+            description: "",
+            category: "",
+            yearofmake: "",
+            colour: "",
             user: firebase.auth().currentUser.uid,
             uuid: (Date.now() + Math.random() + "").replace(".", ""),
             confirm: "",
             err: ""
         }
+
         this.temp = ""
 
     }
 
     async uploadImage(image) {
-        return await firebase.storage().ref(this.state.uuid).put(image)
+        return await firebase.storage().ref("Products/" + this.state.uuid).put(image)
             .then(async (r) => {
                 return await r.ref.getDownloadURL()
             })
@@ -40,10 +40,9 @@ class AddItemPage extends Component {
 
 
     async register() {
-        console.log(this.state)
-        if (this.state.name === "" ||  this.state.price === "" ||
+        if (this.state.name === "" || this.state.price === "" ||
             this.state.category === "" || this.state.yearofmake === "" || this.state.description === "" ||
-            this.state.condition === "" || this.temp === ""|| this.state.colour === "") {
+            this.state.condition === "" || this.temp === "" || this.state.colour === "") {
             this.setState({err: "You must fill in everything!"})
             return
         }
@@ -63,7 +62,7 @@ class AddItemPage extends Component {
                     })
 
                 await firebase.database()
-                    .ref("user")
+                    .ref("users")
                     .child(this.state.user)
                     .child("products")
                     .child(this.state.uuid)
@@ -75,6 +74,8 @@ class AddItemPage extends Component {
                     .catch(e => {
                         this.setState({err: "DIDNT WORK"})
                     })
+
+                global.sendMessage("New product has been added!", this.state.name + " Has been added to the shop!", this.state.user)
             }
         )
     }
@@ -90,39 +91,46 @@ class AddItemPage extends Component {
                         <label style={{color: "green"}}>{this.state.confirm}</label>
 
                         <label itemType="itemType">Name:</label>
-                        <input onChange={(r) => this.setState({name: r.target.value})} id="itemType" name="itemType"
+                        <input value={this.state.value} onChange={(r) => this.setState({name: r.target.value})}
+                               id="itemType" name="itemType"
                                input="text"
                                required/>
                         <label categoriy="category">Category:</label>
-                        <input onChange={(r) => this.setState({category: r.target.value})} id="category" name="category"
+                        <input value={this.state.category} onChange={(r) => this.setState({category: r.target.value})}
+                               id="category" name="category"
                                input="text"
                                required/>
                         <label price="price">Price: </label>
-                        <input onChange={(r) => this.setState({price: r.target.value})} id="price" name="price"
+                        <input value={this.state.price} onChange={(r) => this.setState({price: r.target.value})}
+                               id="price" name="price"
                                input="number"
                                required/>
 
 
                         <label yearofmake="yearofmake">Year of make: </label>
-                        <input onChange={(r) => this.setState({yearofmake: r.target.value})} id="yearofmake"
+                        <input value={this.state.yearofmake}
+                               onChange={(r) => this.setState({yearofmake: r.target.value})} id="yearofmake"
                                name="yearofmake"
                                input="number"
                                required/>
 
 
                         <label colour="colour">Colour: </label>
-                        <input onChange={(r) => this.setState({colour: r.target.value})} id="colour" name="colour"
+                        <input value={this.state.colour} onChange={(r) => this.setState({colour: r.target.value})}
+                               id="colour" name="colour"
                                input="text"
                                required/>
 
                         <label description="description">Description: </label>
-                        <input className='description' onChange={(r) => this.setState({description: r.target.value})}
+                        <input value={this.state.description} className='description'
+                               onChange={(r) => this.setState({description: r.target.value})}
                                id="description" name="description"
                                input="text"
                                required/>
 
                         <label condition="condition" className='condition'>Condition:
-                            <select onChange={(v) => this.setState({condition: v.target.value})}
+                            <select value={this.state.condition}
+                                    onChange={(v) => this.setState({condition: v.target.value})}
                                     className="condition" id="condition">
                                 <option value="new">New</option>
                                 <option value="very_good">Very good</option>

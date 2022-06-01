@@ -1,53 +1,28 @@
 import React from "react";
 import "./Home.css";
-import firebase from "firebase/compat/app"
 import "firebase/compat/database"
-import Product from "./Product"
+import "firebase/compat/auth"
+import firebase from "firebase/compat/app"
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            allProducts: [],
-        }
+
     }
 
     componentDidMount() {
-        this.fetchAllProducts()
-
+        
     }
 
-    fetchAllProducts() {
-        firebase.database().ref("products").once("value", (v) => {
-            const arr = []
-            v.forEach(p => {
-                arr.push(<Product key={p.val().uuid}
-                                  name={p.val().name}
-                                  price={p.val().price}
-                                  image={p.val().image}
-                                  condition={p.val().condition}
-                                  description={p.val().description}
-                                  category={p.val().category}
-                                  yearofmake={p.val().yearofmake}
-                                  colour={p.val().colour}
-                                  owner={p.val().user}
-                                  uuid={p.val().uuid}/>)
-
-            })
-            this.setState({allProducts: arr})
-        }).then(r => console.log("done"));
-
-
-    }
 
     render() {
         return (
             <div style={styles.wrapper}>
                 <div style={styles.product_view}>
                     <div style={styles.product}>
-                    {this.state.allProducts.length > 0 ? this.state.allProducts.map(p => {
-                        return p
-                    }) : <h1 style={{textAlign: "center"}}>There are no items in the shop</h1>}
+                        {this.props.products != null && this.props.products.length > 0 ? this.props.products.map(p => {
+                            return p
+                        }) : <h1 style={{textAlign: "center"}}>There are no items in the shop</h1>}
                     </div>
                 </div>
             </div>
@@ -72,7 +47,7 @@ let styles = {
 
     },
     product: {
-        flex:1,
+        flex: 1,
         width: "20%",
 
     }
